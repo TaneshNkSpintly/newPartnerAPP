@@ -1,0 +1,41 @@
+buildscript {
+    ext.kotlin_version = '1.7.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+
+
+// Include the Flutter plugin
+// include ':app', ':spintly_oauth_sdk_plugin'
+// project(':spintly_oauth_sdk_plugin').projectDir = new File('Custom_Plugins/spintly_oauth_sdk_plugin')
+
+// // Additional configurations if needed...
+
+// // Run the clean task before building
+//preBuild.dependsOn(":spintly_oauth_sdk_plugin:clean")
